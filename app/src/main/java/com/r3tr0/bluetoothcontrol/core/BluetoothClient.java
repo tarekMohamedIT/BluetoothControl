@@ -60,6 +60,8 @@ public class BluetoothClient implements BluetoothCore, BluetoothClientInterface 
         if (adapter == null) adapter = BluetoothAdapter.getDefaultAdapter();
         if (!adapter.isEnabled()) setBluetoothState(STATE_ACTIVATE);
 
+        if (adapter.isDiscovering())adapter.cancelDiscovery();
+
         return new ArrayList<>(adapter.getBondedDevices());
     }
 
@@ -107,7 +109,7 @@ public class BluetoothClient implements BluetoothCore, BluetoothClientInterface 
     @Override
     public void send(String string) {
         try {
-            writer.write(string);                //write bytes over BT connection via outstream
+            writer.write(string);
         } catch (IOException e) {
             e.printStackTrace();
         }
