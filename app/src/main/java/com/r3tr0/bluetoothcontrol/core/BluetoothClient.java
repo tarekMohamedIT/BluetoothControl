@@ -3,11 +3,13 @@ package com.r3tr0.bluetoothcontrol.core;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.widget.Toast;
 
 import com.r3tr0.bluetoothcontrol.interfaces.BluetoothClientInterface;
 import com.r3tr0.bluetoothcontrol.interfaces.BluetoothCore;
 
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +24,9 @@ public class BluetoothClient implements BluetoothCore, BluetoothClientInterface 
 
     private BluetoothAdapter adapter;
     private BluetoothSocket bluetoothSocket;
+
+    private OutputStreamWriter writer;
+
     private String UUID;
     private boolean isConnected;
 
@@ -92,16 +97,28 @@ public class BluetoothClient implements BluetoothCore, BluetoothClientInterface 
 
     @Override
     public void send(char character) {
-
+        try {
+            writer.write(character);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void send(String string) {
-
+        try {
+            writer.write(string);                //write bytes over BT connection via outstream
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void send(int integer) {
-
+        try {
+            writer.write(integer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
